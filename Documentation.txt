@@ -1,0 +1,199 @@
+Comp 4106
+Brendan Smith
+100714420
+
+Write Up
+p1 = .7 , p2 = .3
+
+Best Cut is outlook humidity With Info Gain of 0.600651137087526
+
+	Attributes Used: outlook humidity------> [sunny, high]
+	 Leaf -> no
+
+	Attributes Used: outlook humidity------> [sunny, normal]
+	 Leaf -> yes
+
+	Attributes Used: outlook humidity------> [overcast, high]
+	 Leaf -> yes
+
+	Attributes Used: outlook humidity------> [overcast, normal]
+	 Leaf -> yes
+
+	Attributes Used: outlook humidity------> [rainy, high]
+	 Best Cut is windy With Info Gain of 1.0
+
+		Attributes Used: windy ------> [TRUE]
+		 Leaf -> no
+
+		Attributes Used: windy ------> [FALSE]
+		 Leaf -> yes
+
+	Attributes Used: outlook humidity------> [rainy, normal]
+	 Best Cut is windy With Info Gain of 0.9182958340544896
+
+		Attributes Used: windy ------> [TRUE]
+		 Leaf -> no
+
+		Attributes Used: windy ------> [FALSE]
+		 Leaf -> yes
+		 
+
+Entropy for OutLook Humididy on the Whole Data Set
+
+
+Big Entropy of Set = -(5/14) * Log (5/14) - 9/14 * log (9/14)
+				   = .53 + .41
+				   = .94
+
+Outlook Humidity	#		#play		#NotPlay	Entropy
+
+Sunny high			3		0			3			0
+Sunny Normal		2		2			0			0
+Overcast High		2		2			2			0
+OverCast Normal 	2		2			0			0	
+Rainy Normal		3		2			1			.918 = -(1/3)Log(1/3) - (2/3)*log(2/3)
+Rainy High			2		1			1			1
+
+InfoGain = .94 - (3/14) * .918 - 1(2/14) - 0 - 0..
+InfogGain = .601  This is correct!
+
+Down The Branch for [Rainy, High]
+
+Windy	#		#play		#NotPlay	Entropy
+
+True	1		0			1			0
+False   1		1			0			0
+
+Information Gain = 1.0
+Which Branches into True and False.
+Windy's Nodes are Leaves Entropy = 0 for each.
+
+
+Assuming that my program can correctly compare values this one is the largest!.
+
+Part 4.
+
+Part c) Mushroom Data 81.9 percent were properly categorized.
+		Vote Data 89.4 percent were properly categorized (WITH '?' values added)
+		
+Part d) Running the Data on a random Sample and Test set of Size 50:50
+		With the Vote Data It had a 90.7% Correctness
+		With The Mushroom Data on a Random Set it was 100% Correct in its classification
+		
+Part 5.
+
+Using Single Variable Classification (Too Slow Other wise)
+The Size of the Decision Tree is Monstrous, it has a huge branching factor because of the number of values in each attribute.
+This leads to a large need for information to provide accurate results, versus The Mushroom Data which had less values and more attributes.  
+But some of the attributes were not necessary to the decision process on classifying each row of data.
+
+
+10% Training 90% Testing
+0.3809301317731822
+0.3720120803369493
+0.3789663998699874
+
+50% Training 50% Testing
+0.551028119400802
+0.5495898492254062
+0.5540143583242934
+
+80% Training 20% Testing
+0.5520309595636408
+0.5534326720906847
+
+99%
+0.5615853658536586
+
+What does the DT actually tell you about how to determine the poker hand? Is the DT
+method a good way to classify poker hands?
+
+The decision tree I would say is not a very good way to classify the Poker hand.  There is too many combinations of the cards and although it seems to predict
+with over 50% accuracy it would be best to just standard game logic which can identify symmetry.
+
+Part 6
+
+My alternative method is to set the '?' value to the most commonly occuring value of the attribute.
+This will attempt to improve the generalization of the data
+
+Using "My" Method of generalizing the '?'
+0.999507631708518
+0.999015263417036
+0.9327917282127031
+1.0
+1.0
+0.999015263417036
+0.999015263417036
+Average = .989906 Standard Dev = 0.023321
+
+Using the 'Given' Method
+0.9963072378138847
+1.0
+1.0
+0.9982767109798129
+0.999507631708518
+1.0
+Average = .999015 Standard Dev = 0.001
+Without any resolution
+0.9071885770556376
+
+Part 7.
+
+Shuffling the data is a necessity in guaranteeing better accuracy in your tree.  When reading the data there may be a bias 
+in how the data was entered; some form of Sorted ordering, much like the Iris-Data.  Randomizing yields improvements on developing
+the decision tree properly so that one form of branching is more informed and cannot handle the other forms of test data.
+
+Part 8.
+
+
+Timed Test Cases on a 50-50 Attribute split, with shuffled information.  
+Timing only starts on the Decision Tree build.
+
+These Timse are measured in Milliseconds.
+10%		20%		30%		40%		50%		60%		70%		80%		90%		100%
+271		168		7653	14453	360		8388	266		11047	27837	651
+1449	88		691		14431	200		8483	24611	11005	12403	2468
+1496	153		201		5902	7136	1374							2472
+						164												34683
+53   	105		154		196		240		276		319		360		411		463
+Part 9.
+
+Number of Nodes for Mushroom_Data 10%
+162				Average is 277
+184				Will Take too long to get Standard Deviation for this
+407
+165
+281
+386
+338
+220
+146
+88
+107
+200
+576
+491
+510
+186
+762
+427
+723
+249
+174
+
+Number of Nodes for Vote Data 29 for 50%
+95		Average 107.6667
+83		Standard Deviation 19.45479
+71
+137
+131
+81
+115
+127
+117
+109
+125
+117
+109
+85
+113
